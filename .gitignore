@@ -61,3 +61,6 @@ logs/
 
 ### Optional (frontend kullanılacaksa) ###
 node_modules/
+
+# Spring Boot
+application.yml
