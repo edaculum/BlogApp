@@ -24,12 +24,12 @@ public class UserRole extends BaseEntity {
 
     // Kullanıcı -> birden çok role sahip olabilir
     //nullable = false → User olmadan UserRole oluşturamazsın.
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY) // Her UserRole kaydı bir kullanıcıya bağlıdır. Bir kullanıcı ise birden çok UserRole kaydına sahip olabilir.
     @JoinColumn(name = "user_id", nullable = false) //Foreign key kolon adları
     private User user;
 
     // Rol -> birden çok kullanıcıya atanabilir
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY) // her UserRole kaydı bir role bağlıdır.
     @JoinColumn(name = "role_id", nullable = false)//Foreign key kolon adları
     private Role role;
 
