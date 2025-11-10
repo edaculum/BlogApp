@@ -19,6 +19,9 @@ public class UserRole extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    //User ve Role arasında çoktan çoğa (Many-to-Many) bir ilişki vardır.
+    //User ve Role arasında doğrudan @ManyToMany kullanılmak yerine, ilişkiler UserRole adlı entity üzerinden yönetilir.
+
     // Kullanıcı -> birden çok role sahip olabilir
     //nullable = false → User olmadan UserRole oluşturamazsın.
     @ManyToOne(fetch = FetchType.LAZY)

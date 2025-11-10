@@ -32,7 +32,11 @@ public class User extends BaseEntity{
     private String password;
 
     // Kullanıcının rollerini tutar
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<UserRole> roles = new HashSet<>();
+    //Bir User’ın birden çok rolü varsa, onlar UserRole tablosunda tutulur.
+    //mappedBy = "user" demek: UserRole entity’sindeki user alanı bu ilişkiyi yönetiyor.
+    //cascade = CascadeType.ALL :User üzerinde yapılan tüm işlemleri UserRole tablosuna yansıtır. User oluştur → UserRole otomatik kaydedilir. User sil → tüm UserRole kayıtları otomatik silinir
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true) //Bir kullanıcıya bağlı tüm rol kayıtlarını temsil eder
+    private Set<UserRole> roles = new HashSet<>(); //User entity'si içinde bulunan, kullanıcının rollerini temsil eden koleksiyon alanıdır
 
 }

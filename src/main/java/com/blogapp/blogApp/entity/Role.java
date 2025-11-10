@@ -24,7 +24,11 @@ public class Role extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String roleName;
 
-    @OneToMany(mappedBy = "role")
+    //Bir Role nesnesinin birden çok UserRole kaydı olabilir.
+    //	mappedBy = "role" demek: UserRole entity’sindeki role alanı bu ilişkiyi yönetiyor.
+    //Bu ilişki Role → UserRole yönünü temsil eder
+
+    @OneToMany(mappedBy = "role") //Bir role ait tüm kullanıcı-rol bağlantılarını temsil eder
     private Set<UserRole> users = new HashSet<>();
 
 
