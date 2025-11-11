@@ -14,7 +14,7 @@ public record UserCreateDto(
         String username,
 
         @NotBlank(message = "Email boş olamaz")
-        @Email (message = "gGeçerli bir email giriniz")
+        @Email (message = "Geçerli bir email giriniz")
         String email,
 
         @NotBlank(message = "Şifre boş olamaz")
