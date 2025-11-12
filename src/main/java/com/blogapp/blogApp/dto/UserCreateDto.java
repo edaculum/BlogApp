@@ -11,7 +11,7 @@ public record UserCreateDto(
 
         @NotBlank (message = "Kullanıcı adı boş olamaz")
         @Size (min = 3, max = 50, message = "Kullanıcı adı 3-50 karakter olmalı")
-        String username,
+        String userName,
 
         @NotBlank(message = "Email boş olamaz")
         @Email (message = "Geçerli bir email giriniz")
