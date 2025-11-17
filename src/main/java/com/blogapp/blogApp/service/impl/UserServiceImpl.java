@@ -101,7 +101,8 @@ public class UserServiceImpl implements UserService {
 
         //veritabanında bu e-posta ile kayıtlı kullanıcıyı arar. Varsa user değişkenine atanır.Yoksa hata fırlat.
         //Request DTO -> Entity (email ile arama)
-        User user= userRepository.findByEmail(request.email())
+        // join fetch ile roller de yüklenmiş olur.
+        User user = userRepository.findByEmailWithRoles(request.email())
                 .orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı!"));
 
         //Şifre doğru mu kontrolü

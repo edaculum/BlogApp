@@ -2,6 +2,8 @@ package com.blogapp.blogApp.repository;
 
 import com.blogapp.blogApp.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
@@ -11,7 +13,13 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User,Long> {
 
     //Optional<User> → Kullanıcı varsa döner, yoksa boş döner (NullPointerException yok!)
-    Optional<User> findByEmail(String email); //Login olurken kullanıcıyı email ile bulmak için
-
+    @Query("SELECT u FROM User u " +
+            "LEFT JOIN FETCH u.roles ur " +
+            "LEFT JOIN FETCH ur.role r " +   // ← BU SATIR KRİTİK!
+            "WHERE u.email = :email")
+    Optional<User> findByEmailWithRoles(@Param("email") String email);
     boolean existsByEmail(String email); //Register olurken email daha önce kullanılmış mı? kontrolü için
+
+    boolean existsByUserName(String userName);
+    Optional<User> findByUserName(String userName);
 }
