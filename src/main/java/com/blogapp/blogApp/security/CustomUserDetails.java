@@ -21,11 +21,20 @@ public class CustomUserDetails implements UserDetails {
     //Senin Role entity’in nesne şeklinde → Role(id=1, name="ROLE_ADMIN")
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // User entity'sindeki rol nesnelerinin Spring Security formatına çevrilmesi
         return user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getRole().getRoleName()))
+                .map(role -> {
+                    String roleName = role.getRole().getRoleName();
+
+                    // Eğer DB'de ROLE_ yoksa biz ekliyoruz
+                    if (!roleName.startsWith("ROLE_")) {
+                        roleName = "ROLE_" + roleName;
+                    }
+
+                    return new SimpleGrantedAuthority(roleName);
+                })
                 .collect(Collectors.toSet());
     }
+
 
     //Spring Security login işleminde buradan hash’li password okur
     @Override

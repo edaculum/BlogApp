@@ -13,11 +13,15 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User,Long> {
 
     //Optional<User> → Kullanıcı varsa döner, yoksa boş döner (NullPointerException yok!)
+    //Session kapandıktan sonra ilişkili veri okumaya çalışırsan == JOIN FETCH ile ilgili entity’leri sorguda getir
+    // Bu sorgu tek seferde User + UserRole + Role hepsini getirir.
+    //Session kapanmadan önce hepsi yüklendiği için hata ASLA GELMEZ.
     @Query("SELECT u FROM User u " +
             "LEFT JOIN FETCH u.roles ur " +
             "LEFT JOIN FETCH ur.role r " +   // ← BU SATIR KRİTİK!
             "WHERE u.email = :email")
     Optional<User> findByEmailWithRoles(@Param("email") String email);
+
     boolean existsByEmail(String email); //Register olurken email daha önce kullanılmış mı? kontrolü için
 
     boolean existsByUserName(String userName);
